@@ -15,7 +15,7 @@ answer_the_question_about_skip_true = ["Скипай.", "Нечего тебе �
 answer_the_question_about_skip_false = ["Чё умный самый? Иди давай", "Надо идти, дружочек, надо.", "Вали на пару",
                                         "Сори братан, надо идти", "Чутьё подсказывает, что сёдня скипать нельзя",
                                         "Духи говорят, что сегодня обязательно отметят. Иди на пару короч."]
-weather_smile = ("⛅️", "☀️", "☁️","🥶","🔆","🏖","🏝","🌦","☃️","❄️","⛈","🧤🧣","🩳👕")
+weather_smile = ("⛅️", "☀️", "☁️", "🥶", "🔆", "🏖", "🏝", "🌦", "☃️", "❄️", "⛈", "🧤🧣", "🩳👕")
 headers_for_request = {
     "User-Agent": "Mozilla/5.0"
 }
@@ -114,10 +114,10 @@ def format_schedule_for_day(ics_text: str, weekday: str) -> str:
     return "\n".join(lines).strip()
 
 
-def get_schedule(number_group)->str:
+def get_schedule(number_group) -> str:
     connect = requests.get("https://table.nsu.ru/ics/group/25216", headers=headers_for_request)
     ics_text = connect.text
-    if ics_text[0]=='<':
+    if ics_text[0] == '<':
         return "Не удалось вывести расписание этой группы ❌"
     else:
         return format_schedule_for_day(ics_text, WEEKDAY_MAP_OF_NUM[datetime.now().date().weekday()])
@@ -146,8 +146,10 @@ def start(message):
     btn2 = telebot.types.KeyboardButton("/info")
     btn3 = telebot.types.KeyboardButton("/start")
     btn4 = telebot.types.KeyboardButton("/skip_lesson")
+    btn5 = telebot.types.KeyboardButton("/schedule")
 
-    base_buttons.add(btn1, btn2, btn4)
+    base_buttons.add(btn2, btn4)
+    base_buttons.add(btn1, btn5)
     base_buttons.add(btn3)
 
     bot.send_message(message.chat.id, "Hello, " + message.from_user.first_name, reply_markup=base_buttons)
@@ -195,7 +197,7 @@ def schedule(message):
 
 def schedule_from_number_group(message):
     text = get_schedule(message.text)
-    bot.send_message(message.chat.id,text)
+    bot.send_message(message.chat.id, text)
 
 
 @bot.callback_query_handler(func=lambda callback: True)
