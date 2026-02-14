@@ -115,7 +115,7 @@ def format_schedule_for_day(ics_text: str, weekday: str) -> str:
 
 
 def get_schedule(number_group) -> str:
-    connect = requests.get("https://table.nsu.ru/ics/group/25216", headers=headers_for_request)
+    connect = requests.get("https://table.nsu.ru/ics/group/"+number_group, headers=headers_for_request)
     ics_text = connect.text
     if ics_text[0] == '<':
         return "Не удалось вывести расписание этой группы ❌"
