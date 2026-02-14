@@ -107,6 +107,7 @@ def format_schedule_for_day(ics_text: str, weekday: str) -> str:
         time = f"{l['start'].strftime('%H:%M')}–{l['end'].strftime('%H:%M')}"
         lines.append(
             f"🕒 {time}\n"
+            f"📚 {l['summary']}\n"
             f"🧑🏼‍🏫 {l['teacher']}\n"
             f"🚪 {l['location']}\n"
         )
